@@ -1,56 +1,401 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBook · Dashboard</title>
 
-<title>Login</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind + fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <style>
+    /* ---------- global theme ---------- */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 0% 30%, rgba(15,118,252,0.12), transparent 50%),
+                  radial-gradient(circle at 100% 70%, rgba(20,184,166,0.12), transparent 55%),
+                  linear-gradient(145deg,#f6faff 0%,#f1f5fe 50%,#f0fdfc 100%);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    /* glass card base */
+    .glass-card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 20px 40px -12px rgba(0,35,80,0.25);
+      transition: all 0.25s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 45px -12px rgba(37,99,235,0.35);
+    }
+
+    /* logo gradient */
+    .logo-text {
+      background: linear-gradient(115deg,#2563eb,#14b8a6,#8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 200% auto;
+      animation: gradientShift 6s ease infinite;
+    }
+
+    /* primary button */
+    .btn-primary {
+      background: linear-gradient(135deg,#2563eb,#1e40af,#312e81);
+      background-size: 200% 200%;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px -8px rgba(37,99,235,0.4);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 30px -10px #1e3a8a;
+    }
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    /* badge styles */
+    .badge-completed {
+      background: rgba(16,185,129,0.15);
+      color: #065f46;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-block;
+    }
+    .badge-upcoming {
+      background: rgba(37,99,235,0.15);
+      color: #1e40af;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    .badge-cancelled {
+      background: rgba(239,68,68,0.15);
+      color: #b91c1c;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+    }
+
+    /* fade up animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    /* tiny custom */
+    .tip-card {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+    }
+    .action-icon {
+      font-size: 1.8rem;
+    }
+  </style>
 </head>
+<body>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <!-- ========== NAVBAR (enhanced with notifications) ========== -->
+  <nav class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/70 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+      <!-- logo -->
+      <div class="flex items-center text-2xl font-bold">
+        <span class="mr-2 text-3xl">⚕️</span>
+        <span class="logo-text">MediBook</span>
+      </div>
 
-<div class="bg-white p-8 rounded-xl shadow-lg w-96">
+      <!-- right side: nav links + profile + notif -->
+      <div class="flex items-center gap-6">
+        <a href="/doctors" class="font-medium text-slate-700 hover:text-blue-600 transition">Find Doctors</a>
+        <a href="/appointments" class="font-medium text-slate-700 hover:text-blue-600 transition">Appointments</a>
+        
+        <!-- notification bell (simple) -->
+        <div class="relative">
+          <span class="text-2xl cursor-pointer">🔔</span>
+          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+        </div>
 
-<h2 class="text-2xl font-bold text-center text-blue-600 mb-6">
-Login
-</h2>
+        <!-- profile dropdown hint -->
+        <div class="flex items-center gap-3 cursor-pointer group">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-9 h-9 rounded-full border-2 border-white shadow">
+          <span class="font-medium text-slate-700 group-hover:text-blue-600">Rohan</span>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-<form action="/login" method="POST" class="space-y-4">
 
-<input
-type="email"
-name="email"
-placeholder="Email"
-class="w-full border p-3 rounded-lg focus:outline-blue-500"
-required
->
+  <!-- ========== DASHBOARD MAIN ========== -->
+  <section class="max-w-7xl mx-auto px-6 py-10">
 
-<input
-type="password"
-name="password"
-placeholder="Password"
-class="w-full border p-3 rounded-lg focus:outline-blue-500"
-required
->
+    <!-- welcome header with date & search (enhanced) -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-10 fade-up">
+      <div>
+        <h1 class="text-4xl font-bold mb-1">Welcome back, Rohan 👋</h1>
+        <p class="text-slate-600">Manage your health journey — appointments, recommendations & more.</p>
+      </div>
+      <div class="mt-4 md:mt-0 flex gap-3">
+        <!-- simple search (just for design) -->
+        <div class="relative">
+          <input type="text" placeholder="Search doctors..." 
+                class="pl-10 pr-4 py-2 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+          <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+        </div>
+        <div class="bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full text-slate-700 font-medium flex items-center gap-1">
+          📅 <span>19 Mar 2026</span>
+        </div>
+      </div>
+    </div>
 
-<button
-class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
-Login
-</button>
+    <!-- STATS CARDS (enhanced with icons & more context) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-12 fade-up delay-1">
+      <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+        <div class="text-4xl bg-blue-100 p-3 rounded-xl">📋</div>
+        <div>
+          <h3 class="text-3xl font-bold text-blue-700">12</h3>
+          <p class="text-slate-600">Total appointments</p>
+        </div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+        <div class="text-4xl bg-teal-100 p-3 rounded-xl">⏳</div>
+        <div>
+          <h3 class="text-3xl font-bold text-teal-600">3</h3>
+          <p class="text-slate-600">Upcoming</p>
+        </div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+        <div class="text-4xl bg-indigo-100 p-3 rounded-xl">⭐</div>
+        <div>
+          <h3 class="text-3xl font-bold text-indigo-600">5</h3>
+          <p class="text-slate-600">Reviews given</p>
+        </div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+        <div class="text-4xl bg-amber-100 p-3 rounded-xl">❤️</div>
+        <div>
+          <h3 class="text-3xl font-bold text-amber-600">2</h3>
+          <p class="text-slate-600">Health reminders</p>
+        </div>
+      </div>
+    </div>
 
-</form>
+    <!-- UPCOMING APPOINTMENTS (horizontal cards) + view all -->
+    <div class="mb-12 fade-up delay-2">
+      <div class="flex justify-between items-center mb-5">
+        <h2 class="text-2xl font-bold">📅 Upcoming appointments</h2>
+        <a href="/appointments" class="text-blue-600 hover:underline flex items-center gap-1">View all →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- card 1 -->
+        <div class="glass-card p-5 rounded-2xl flex items-start gap-4 hover:shadow-lg transition">
+          <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-white">
+          <div>
+            <h3 class="font-bold text-lg">Dr. Priya Patel</h3>
+            <p class="text-sm text-teal-600">Dentist</p>
+            <p class="text-sm text-slate-500 mt-1">📆 20 Mar 2026 · 10:30 AM</p>
+            <span class="badge-upcoming mt-2 inline-block">Upcoming</span>
+          </div>
+        </div>
+        <!-- card 2 -->
+        <div class="glass-card p-5 rounded-2xl flex items-start gap-4 hover:shadow-lg transition">
+          <img src="https://randomuser.me/api/portraits/men/54.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-white">
+          <div>
+            <h3 class="font-bold text-lg">Dr. Ahmed Khan</h3>
+            <p class="text-sm text-teal-600">Neurologist</p>
+            <p class="text-sm text-slate-500 mt-1">📆 25 Mar 2026 · 2:15 PM</p>
+            <span class="badge-upcoming mt-2 inline-block">Upcoming</span>
+          </div>
+        </div>
+        <!-- card 3 (show reschedule possibility) -->
+        <div class="glass-card p-5 rounded-2xl flex items-start gap-4 hover:shadow-lg transition">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-white">
+          <div>
+            <h3 class="font-bold text-lg">Dr. Rahul Sharma</h3>
+            <p class="text-sm text-teal-600">Cardiologist</p>
+            <p class="text-sm text-slate-500 mt-1">📆 2 Apr 2026 · 9:00 AM</p>
+            <span class="badge-upcoming mt-2 inline-block">Upcoming</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<p class="text-center text-gray-600 mt-4">
+    <!-- QUICK ACTIONS + RECOMMENDATIONS (two columns) -->
+    <div class="grid md:grid-cols-3 gap-6 mb-12 fade-up delay-3">
+      <!-- left: quick actions (now 4 items in 2x2) -->
+      <div class="glass-card rounded-2xl p-6 md:col-span-1">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">⚡</span> Quick actions</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <a href="/doctors" class="bg-white/50 p-4 rounded-xl text-center hover:bg-white/80 transition">
+            <div class="text-3xl mb-1">🔍</div>
+            <span class="text-sm font-medium">Find doctors</span>
+          </a>
+          <a href="/appointments" class="bg-white/50 p-4 rounded-xl text-center hover:bg-white/80 transition">
+            <div class="text-3xl mb-1">📋</div>
+            <span class="text-sm font-medium">My visits</span>
+          </a>
+          <a href="/profile" class="bg-white/50 p-4 rounded-xl text-center hover:bg-white/80 transition">
+            <div class="text-3xl mb-1">👤</div>
+            <span class="text-sm font-medium">Profile</span>
+          </a>
+          <a href="/reviews" class="bg-white/50 p-4 rounded-xl text-center hover:bg-white/80 transition">
+            <div class="text-3xl mb-1">✍️</div>
+            <span class="text-sm font-medium">Write review</span>
+          </a>
+        </div>
+      </div>
 
-Don't have account?
+      <!-- middle + right: recommended doctors (two simple cards) -->
+      <div class="md:col-span-2 glass-card rounded-2xl p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">👨‍⚕️ Recommended for you</h2>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <!-- rec 1 -->
+          <div class="flex items-center gap-3 bg-white/60 p-3 rounded-xl hover:bg-white/80 transition">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-14 h-14 rounded-full object-cover">
+            <div>
+              <h4 class="font-semibold">Dr. Sneha Rao</h4>
+              <p class="text-sm text-slate-600">Dermatologist</p>
+              <div class="flex text-amber-400 text-sm">★★★★☆ (89)</div>
+            </div>
+          </div>
+          <!-- rec 2 -->
+          <div class="flex items-center gap-3 bg-white/60 p-3 rounded-xl hover:bg-white/80 transition">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" class="w-14 h-14 rounded-full object-cover">
+            <div>
+              <h4 class="font-semibold">Dr. Vikram Mehta</h4>
+              <p class="text-sm text-slate-600">Orthopedic</p>
+              <div class="flex text-amber-400 text-sm">★★★★★ (212)</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 text-center">
+          <a href="/doctors" class="text-blue-600 text-sm hover:underline">see more recommendations →</a>
+        </div>
+      </div>
+    </div>
 
-<a href="/register" class="text-blue-600 font-medium">
-Register
-</a>
+    <!-- RECENT APPOINTMENTS TABLE (enhanced with status badges + actions) -->
+    <div class="glass-card rounded-2xl p-6 md:p-8 fade-up delay-1">
+      <div class="flex justify-between items-center mb-5">
+        <h2 class="text-2xl font-bold">📋 Recent appointments</h2>
+        <a href="/appointments" class="text-blue-600 hover:underline text-sm">view all</a>
+      </div>
 
-</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="text-slate-600 border-b border-slate-200/70">
+            <tr>
+              <th class="pb-3 font-semibold">Doctor</th>
+              <th class="pb-3 font-semibold">Specialization</th>
+              <th class="pb-3 font-semibold">Date & time</th>
+              <th class="pb-3 font-semibold">Status</th>
+              <th class="pb-3 font-semibold"></th>
+            </tr>
+          </thead>
+          <tbody class="text-slate-700">
+            <tr class="border-b border-slate-100">
+              <td class="py-4 font-medium">Dr. Rahul Sharma</td>
+              <td>Cardiologist</td>
+              <td>12 Mar 2026, 11:30</td>
+              <td><span class="badge-completed">Completed</span></td>
+              <td class="text-slate-400 hover:text-blue-600 cursor-pointer">✎</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="py-4 font-medium">Dr. Priya Patel</td>
+              <td>Dentist</td>
+              <td>20 Mar 2026, 10:30</td>
+              <td><span class="badge-upcoming">Upcoming</span></td>
+              <td class="text-slate-400 hover:text-blue-600 cursor-pointer">⏰ reschedule</td>
+            </tr>
+            <tr class="border-b border-slate-100">
+              <td class="py-4 font-medium">Dr. Anjali Nair</td>
+              <td>Pediatrician</td>
+              <td>5 Mar 2026, 15:00</td>
+              <td><span class="badge-completed">Completed</span></td>
+              <td class="text-slate-400 hover:text-blue-600 cursor-pointer">✎</td>
+            </tr>
+            <tr>
+              <td class="py-4 font-medium">Dr. Sanjay Gupta</td>
+              <td>ENT</td>
+              <td>28 Feb 2026, 9:15</td>
+              <td><span class="badge-cancelled">Cancelled</span></td>
+              <td class="text-slate-400 hover:text-blue-600 cursor-pointer">🔄 rebook</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-</div>
+    <!-- HEALTH TIPS SECTION (new) -->
+    <div class="mt-12 grid md:grid-cols-2 gap-6 fade-up delay-2">
+      <!-- health tip of the day -->
+      <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+        <div class="text-5xl">💡</div>
+        <div>
+          <h3 class="text-xl font-bold mb-2">Health tip of the day</h3>
+          <p class="text-slate-600">Drink at least 8 glasses of water daily. Stay hydrated to boost energy and focus.</p>
+          <span class="text-blue-600 text-sm mt-2 inline-block">more tips →</span>
+        </div>
+      </div>
+      <!-- upcoming health reminder -->
+      <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+        <div class="text-5xl">⏰</div>
+        <div>
+          <h3 class="text-xl font-bold mb-2">Next checkup reminder</h3>
+          <p class="text-slate-600">Your annual health check is due in 2 weeks. Book an appointment soon.</p>
+          <button class="btn-primary text-sm px-4 py-2 rounded-lg mt-3">set reminder</button>
+        </div>
+      </div>
+    </div>
 
+    <!-- micro footer (simple) -->
+    <div class="mt-16 text-center text-slate-400 text-sm border-t border-slate-200/50 pt-6">
+      <p>© 2026 MediBook – Your health companion. <span class="mx-2">·</span> <a href="#" class="hover:text-blue-600">Privacy</a> <span class="mx-2">·</span> <a href="#" class="hover:text-blue-600">Terms</a></p>
+    </div>
+
+  </section>
+
+  <!-- (optional) tiny script for smoothness -->
+  <script>
+    (function() {
+      // smooth scroll
+      document.documentElement.style.scrollBehavior = 'smooth';
+    })();
+  </script>
 </body>
 </html>
