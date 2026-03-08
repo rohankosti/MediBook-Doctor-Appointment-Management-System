@@ -2,143 +2,219 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MediBook · Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediBook · Register</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-<style>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 0% 30%, rgba(15, 118, 252, 0.12), transparent 50%),
+                radial-gradient(circle at 100% 70%, rgba(20, 184, 166, 0.12), transparent 55%),
+                linear-gradient(145deg, #f6faff 0%, #f1f5fe 50%, #f0fdfc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: scroll;
+            scroll-behavior: smooth;
+            padding-bottom:20px 60px;
+        }
 
-body{
-font-family:'Plus Jakarta Sans',sans-serif;
-background: radial-gradient(circle at 0% 30%, rgba(15,118,252,0.12), transparent 50%),
-radial-gradient(circle at 100% 70%, rgba(20,184,166,0.12), transparent 55%),
-linear-gradient(145deg,#f6faff 0%,#f1f5fe 50%,#f0fdfc 100%);
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-overflow:hidden;
-padding:60px 20px;
-}
+        /* floating blobs same as homepage */
+        .blob {
+            position: absolute;
+            border-radius: 70% 30% 60% 40% / 50% 60% 40% 50%;
+            filter: blur(60px);
+            opacity: .5;
+            z-index: 0;
+            animation: morph 15s linear infinite alternate;
+        }
 
-/* floating blobs same as homepage */
-.blob{
-position:absolute;
-border-radius:70% 30% 60% 40% / 50% 60% 40% 50%;
-filter:blur(60px);
-opacity:.5;
-z-index:0;
-animation:morph 15s linear infinite alternate;
-}
+        @keyframes morph {
+            0% {
+                transform: translate(0, 0) scale(1)
+            }
 
-@keyframes morph{
-0%{transform:translate(0,0) scale(1)}
-100%{transform:translate(20px,-20px) scale(1.1)}
-}
+            100% {
+                transform: translate(20px, -20px) scale(1.1)
+            }
+        }
 
-/* logo gradient */
-.logo-text{
-background:linear-gradient(115deg,#2563eb,#14b8a6,#8b5cf6);
--webkit-background-clip:text;
-color:transparent;
-}
+        /* logo gradient */
+        .logo-text {
+            background: linear-gradient(115deg, #2563eb, #14b8a6, #8b5cf6);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
-/* glass card */
-.glass-card{
-background:rgba(255,255,255,.75);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,.9);
-box-shadow:0 20px 40px -12px rgba(0,35,80,.25);
-}
+        /* glass card */
+        .glass-card {
+            background: rgba(255, 255, 255, .75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .9);
+            box-shadow: 0 20px 40px -12px rgba(0, 35, 80, .25);
+        }
 
-/* button */
-.btn-primary{
-background:linear-gradient(135deg,#2563eb,#1e40af,#312e81);
-color:white;
-font-weight:600;
-transition:.3s;
-}
+        /* button */
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1e40af, #312e81);
+            color: white;
+            font-weight: 600;
+            transition: .3s;
+        }
 
-.btn-primary:hover{
-transform:translateY(-2px);
-box-shadow:0 25px 35px -12px #1e3a8a;
-}
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 35px -12px #1e3a8a;
+        }
 
-/* inputs */
-.input-field{
-border:1px solid #e2e8f0;
-transition:.2s;
-}
+        /* inputs */
+        .input-field {
+            border: 1px solid #e2e8f0;
+            transition: .2s;
+        }
 
-.input-field:focus{
-border-color:#2563eb;
-box-shadow:0 0 0 2px rgba(37,99,235,.15);
-outline:none;
-}
-
-</style>
+        .input-field:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, .15);
+            outline: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- background blobs -->
-<div class="blob w-[300px] h-[300px] bg-blue-300/30 top-10 left-10"></div>
-<div class="blob w-[400px] h-[400px] bg-teal-300/30 bottom-0 right-10"></div>
+    <!-- background blobs -->
+    <div class="blob w-[300px] h-[300px] bg-blue-300/30 top-10 left-10"></div>
+    <div class="blob w-[400px] h-[400px] bg-teal-300/30 bottom-0 right-10"></div>
 
-<!-- register card -->
-<div class="glass-card p-12 rounded-3xl w-full max-w-lg mx-auto">
+    <!-- register card -->
+    <div class="glass-card p-12 rounded-3xl w-full max-w-lg mx-auto">
 
-<!-- logo -->
-<div class="text-center mb-8">
-<h1 class="text-3xl font-extrabold logo-text">⚕ MediBook</h1>
-<p class="text-slate-500 mt-2">Create your account</p>
-</div>
+        <!-- logo -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold logo-text">⚕ MediBook</h1>
+            <p class="text-slate-500 mt-2">Create your account</p>
+        </div>
 
-<form action="/register" method="POST" class="space-y-5">
+        <form id="registerform" class="space-y-5">
 
-<div>
-<label class="text-sm font-medium text-slate-600">Full Name</label>
-<input type="text" name="name" required
-class="input-field w-full mt-2 px-4 py-3 rounded-xl">
-</div>
+            <div>
+                <label class="text-sm font-medium text-slate-600">Full Name</label>
+                <input type="text" name="name" required class="input-field w-full mt-2 px-4 py-3 rounded-xl">
+            </div>
 
-<div>
-<label class="text-sm font-medium text-slate-600">Email</label>
-<input type="email" name="email" required
-class="input-field w-full mt-2 px-4 py-3 rounded-xl">
-</div>
+            <div>
+                <label class="text-sm font-medium text-slate-600">Email</label>
+                <input type="email" name="email" required class="input-field w-full mt-2 px-4 py-3 rounded-xl">
+            </div>
 
-<div>
-<label class="text-sm font-medium text-slate-600">Password</label>
-<input type="password" name="password" required
-class="input-field w-full mt-2 px-4 py-3 rounded-xl">
-</div>
+            <div>
+                <label class="text-sm font-medium text-slate-600">Password</label>
+                <input id="password" type="password" name="password" required
+                    class="input-field w-full mt-2 px-4 py-3 rounded-xl">
+            </div>
 
-<div>
-<label class="text-sm font-medium text-slate-600">Confirm Password</label>
-<input type="password" name="confirmPassword" required
-class="input-field w-full mt-2 px-4 py-3 rounded-xl">
-</div>
+            <div>
+                <label class="text-sm font-medium text-slate-600">Confirm Password</label>
+                <input id="confirmPassword" type="password" name="confirmPassword" required
+                    class="input-field w-full mt-2 px-4 py-3 rounded-xl">
+            </div>
 
-<button class="btn-primary w-full py-3 rounded-xl text-lg">
-Create Account
-</button>
+            <button class="btn-primary w-full py-3 rounded-xl text-lg">
+                <input type="submit" value="Create Account"> 
+            </button>
 
-</form>
+        </form>
 
-<p class="text-center text-sm text-slate-600 mt-6">
-Already have an account?
-<a href="/login" class="text-blue-600 font-semibold hover:underline">
-Login
-</a>
-</p>
+        <p class="text-center text-sm text-slate-600 mt-6">
+            Already have an account?
+            <a href="/login" class="text-blue-600 font-semibold hover:underline">
+                Login
+            </a>
+        </p>
 
-</div>
+        <!-- Backend Message -->
+        <div id="eroor" class="mt-4 text-sm text-center"></div>
 
+    </div>
+
+    <script>
+        const registerform = document.getElementById("registerform");
+        const eroor = document.getElementById("eroor");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        registerform.addEventListener("submit", async (e) => {
+            try {
+                e.preventDefault()
+
+                //Password Match Cheque
+                if (password.value !== confirmPassword.value) {
+                    eroor.innerHTML = `
+        <div class="bg-red-500/10 border border-red-500 
+                    text-red-400 px-4 py-2 rounded-lg">
+          Confirm-Password does not match 
+        </div>`;
+                    return;
+                }
+
+                const form = new FormData(registerform);
+                const obj = Object.fromEntries(form.entries());
+
+                const res = await fetch("/registerdata", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(obj)
+                })
+
+                const data = await res.json();
+                console.log(data);
+                console.log(res);
+
+                if (res.ok) {
+
+                    eroor.innerHTML = `
+                <div class="bg-green-500/10 border border-green-500 
+                text-green-400 px-4 py-2 rounded-lg">
+            ${data.msg}
+            </div>`;
+                    registerform.reset();
+
+                    setTimeout(() => {
+                        window.location.href = "/Login"
+                        eroor.innerHTML = ""
+                    }, 2000);
+                }
+                else {
+                    registerform.reset();
+                    eroor.innerHTML = `
+            <div class="bg-red-500/10 border border-red-500 
+            text-red-400 px-4 py-2 rounded-lg">
+            ${data.msg}
+            </div>`;
+                }
+            }
+            catch (error) {
+                console.error(error);
+
+            }
+
+        })
+    </script>
 </body>
+
 </html>
