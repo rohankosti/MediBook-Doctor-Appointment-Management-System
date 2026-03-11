@@ -1,236 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partial/header') %>
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MediBook · Dashboard</title>
+<section class="py-16">
+<div class="max-w-6xl mx-auto px-6">
 
-<script src="https://cdn.tailwindcss.com"></script>
+<h1 class="text-3xl font-bold mb-8">
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</h1>
 
-<style>
+<div class="grid md:grid-cols-3 gap-6">
 
-body{
-font-family:'Plus Jakarta Sans',sans-serif;
-background: radial-gradient(circle at 0% 30%, rgba(15,118,252,0.12), transparent 50%),
-radial-gradient(circle at 100% 70%, rgba(20,184,166,0.12), transparent 55%),
-linear-gradient(145deg,#f6faff 0%,#f1f5fe 50%,#f0fdfc 100%);
-min-height:100vh;
-}
-
-/* glass cards */
-
-.glass-card{
-background:rgba(255,255,255,.75);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,.9);
-box-shadow:0 20px 40px -12px rgba(0,35,80,.25);
-transition:.3s;
-}
-
-.glass-card:hover{
-transform:translateY(-4px);
-box-shadow:0 25px 45px -12px rgba(37,99,235,.35);
-}
-
-/* logo gradient */
-
-.logo-text{
-background:linear-gradient(115deg,#2563eb,#14b8a6,#8b5cf6);
--webkit-background-clip:text;
-color:transparent;
-}
-
-/* button */
-
-.btn-primary{
-background:linear-gradient(135deg,#2563eb,#1e40af,#312e81);
-color:white;
-font-weight:600;
-transition:.3s;
-}
-
-.btn-primary:hover{
-transform:translateY(-2px);
-box-shadow:0 20px 30px -10px #1e3a8a;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- Navbar -->
-
-<nav class="sticky top-0 bg-white/70 backdrop-blur-xl border-b border-white/70 shadow-sm">
-
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-<div class="flex items-center text-2xl font-bold">
-<span class="mr-2">⚕</span>
-<span class="logo-text">MediBook</span>
+<div class="glass-card p-6 rounded-2xl">
+<h3 class="text-xl font-bold">My Appointments</h3>
+<p class="text-slate-600 mt-2">View your booked appointments</p>
 </div>
 
-<div class="flex items-center gap-6">
+<div class="glass-card p-6 rounded-2xl">
+<h3 class="text-xl font-bold">Find Doctors</h3>
+<p class="text-slate-600 mt-2">Search trusted specialists</p>
+</div>
 
-<a href="/doctors" class="font-medium text-slate-700 hover:text-blue-600">Find Doctors</a>
-<a href="/appointments" class="font-medium text-slate-700 hover:text-blue-600">Appointments</a>
-
-<div class="flex items-center gap-3">
-<img src="https://randomuser.me/api/portraits/men/32.jpg"
-class="w-9 h-9 rounded-full">
-
-<span class="font-medium text-slate-700">Rohan</span>
+<div class="glass-card p-6 rounded-2xl">
+<h3 class="text-xl font-bold">My Profile</h3>
+<p class="text-slate-600 mt-2">Manage your personal info</p>
 </div>
 
 </div>
 
 </div>
-
-</nav>
-
-
-<!-- Dashboard Content -->
-
-<section class="max-w-7xl mx-auto px-6 py-12">
-
-
-<!-- welcome -->
-
-<div class="mb-10">
-
-<h1 class="text-4xl font-bold mb-2">Welcome back 👋</h1>
-
-<p class="text-slate-600">Manage your appointments and find the best doctors.</p>
-
-</div>
-
-
-<!-- stats -->
-
-<div class="grid md:grid-cols-3 gap-6 mb-12">
-
-<div class="glass-card p-8 rounded-2xl">
-
-<h3 class="text-3xl font-bold text-blue-700">12</h3>
-
-<p class="text-slate-600 mt-2">Total Appointments</p>
-
-</div>
-
-<div class="glass-card p-8 rounded-2xl">
-
-<h3 class="text-3xl font-bold text-teal-600">3</h3>
-
-<p class="text-slate-600 mt-2">Upcoming</p>
-
-</div>
-
-<div class="glass-card p-8 rounded-2xl">
-
-<h3 class="text-3xl font-bold text-indigo-600">5</h3>
-
-<p class="text-slate-600 mt-2">Reviews Given</p>
-
-</div>
-
-</div>
-
-
-<!-- quick actions -->
-
-<div class="grid md:grid-cols-3 gap-6 mb-12">
-
-<div class="glass-card p-8 rounded-2xl text-center">
-
-<h3 class="text-xl font-semibold mb-4">Find Doctors</h3>
-
-<p class="text-slate-600 mb-6">Search specialists and book appointments.</p>
-
-<a href="/doctors" class="btn-primary px-6 py-3 rounded-xl inline-block">
-Browse Doctors
-</a>
-
-</div>
-
-<div class="glass-card p-8 rounded-2xl text-center">
-
-<h3 class="text-xl font-semibold mb-4">My Appointments</h3>
-
-<p class="text-slate-600 mb-6">View upcoming and past bookings.</p>
-
-<a href="/appointments" class="btn-primary px-6 py-3 rounded-xl inline-block">
-View Appointments
-</a>
-
-</div>
-
-<div class="glass-card p-8 rounded-2xl text-center">
-
-<h3 class="text-xl font-semibold mb-4">My Profile</h3>
-
-<p class="text-slate-600 mb-6">Update personal information.</p>
-
-<a href="/profile" class="btn-primary px-6 py-3 rounded-xl inline-block">
-Edit Profile
-</a>
-
-</div>
-
-</div>
-
-
-<!-- recent appointments -->
-
-<div class="glass-card rounded-2xl p-8">
-
-<h2 class="text-2xl font-bold mb-6">Recent Appointments</h2>
-
-<table class="w-full text-left">
-
-<thead class="text-slate-600 border-b">
-
-<tr>
-
-<th class="pb-3">Doctor</th>
-<th class="pb-3">Specialization</th>
-<th class="pb-3">Date</th>
-<th class="pb-3">Status</th>
-
-</tr>
-
-</thead>
-
-<tbody class="text-slate-700">
-
-<tr class="border-b">
-
-<td class="py-4">Dr. Rahul Sharma</td>
-<td>Cardiologist</td>
-<td>12 March 2026</td>
-<td class="text-green-600 font-medium">Completed</td>
-
-</tr>
-
-<tr class="border-b">
-
-<td class="py-4">Dr. Priya Patel</td>
-<td>Dentist</td>
-<td>20 March 2026</td>
-<td class="text-blue-600 font-medium">Upcoming</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-
 </section>
-
-</body>
-</html>
+<%- include('partial/footer') %>

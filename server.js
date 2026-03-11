@@ -10,7 +10,7 @@ app.use(express.urlencoded({extends:true}))
 
 // EJS Setup
 app.set("view engine","ejs");
-app.set("views","views");
+app.set("views","views"); 
 
 // Web Routes
 app.use(WEBROUTES)

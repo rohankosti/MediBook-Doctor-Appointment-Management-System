@@ -13,6 +13,12 @@ router.get("/Login", (req, res) => {
 router.get("/Register", (req, res) => {
   res.render("Register", { pagetittle: "Register" });
 });
+router.get("/About", (req, res) => {
+  res.render("About", { pagetittle: "About" });
+});
+router.get("/Contact", (req, res) => {
+  res.render("Contact", { pagetittle: "Contact" });
+});
 
 router.use((req, res) => {
   res.status(404).render("Eroor", {
